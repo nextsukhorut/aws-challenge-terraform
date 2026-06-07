@@ -33,7 +33,7 @@ try {
             & $terraform apply challenge.tfplan
         }
         "destroy" {
-            & $terraform destroy
+            & $terraform destroy -auto-approve
         }
     }
 }
