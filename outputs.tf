@@ -1,19 +1,14 @@
-output "vpc_id" {
-  description = "ID of the created VPC."
-  value       = aws_vpc.main.id
+output "instance_id" {
+  description = "ID of the EC2 instance created for SSH access."
+  value       = aws_instance.ssh.id
 }
 
-output "public_subnet_ids" {
-  description = "IDs of the created public subnets."
-  value       = [for subnet in aws_subnet.public : subnet.id]
+output "instance_public_ip" {
+  description = "Public IP address of the EC2 instance created for SSH access."
+  value       = aws_instance.ssh.public_ip
 }
 
-output "internet_gateway_id" {
-  description = "ID of the created Internet Gateway."
-  value       = aws_internet_gateway.main.id
-}
-
-output "public_route_table_id" {
-  description = "ID of the created public route table."
-  value       = aws_route_table.public.id
+output "key_pair_name" {
+  description = "Name of the AWS key pair registered for SSH access."
+  value       = aws_key_pair.ssh.key_name
 }

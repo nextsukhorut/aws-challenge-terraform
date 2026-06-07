@@ -1,74 +1,34 @@
 variable "aws_region" {
-  description = "AWS region where the network resources are created."
+  description = "AWS region where the EC2 and SSH resources are created."
   type        = string
 }
 
-variable "vpc_name" {
-  description = "Name tag for the VPC."
+variable "project_id" {
+  description = "Project identifier used to discover pre-created infrastructure and tag created resources."
   type        = string
 }
 
-variable "vpc_cidr" {
-  description = "CIDR block for the VPC."
+variable "ssh_key" {
+  description = "Provides custom public SSH key."
   type        = string
 }
 
-variable "subnet1_name" {
-  description = "Name tag for the first public subnet."
+variable "aws_keypair_name" {
+  description = "Name of the AWS key pair to create."
   type        = string
 }
 
-variable "subnet1_cidr" {
-  description = "CIDR block for the first public subnet."
+variable "aws_instance_name" {
+  description = "Name tag for the EC2 instance."
   type        = string
 }
 
-variable "availability_zone1" {
-  description = "Availability Zone for the first public subnet."
+variable "aws_security_group_name" {
+  description = "Name of the pre-created security group that allows SSH access."
   type        = string
 }
 
-variable "subnet2_name" {
-  description = "Name tag for the second public subnet."
+variable "instance_type" {
+  description = "EC2 instance type used for the SSH target instance."
   type        = string
-}
-
-variable "subnet2_cidr" {
-  description = "CIDR block for the second public subnet."
-  type        = string
-}
-
-variable "availability_zone2" {
-  description = "Availability Zone for the second public subnet."
-  type        = string
-}
-
-variable "subnet3_name" {
-  description = "Name tag for the third public subnet."
-  type        = string
-}
-
-variable "subnet3_cidr" {
-  description = "CIDR block for the third public subnet."
-  type        = string
-}
-
-variable "availability_zone3" {
-  description = "Availability Zone for the third public subnet."
-  type        = string
-}
-
-variable "internet_gateway_name" {
-  description = "Name tag for the Internet Gateway."
-  type        = string
-}
-
-variable "routing_table_name" {
-  description = "Name tag for the public route table."
-  type        = string
-}
-
-variable "common_tags" {
-  description = "Common tags applied to all taggable AWS resources."
-  type        = map(string)
 }

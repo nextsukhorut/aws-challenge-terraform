@@ -3,12 +3,9 @@ $ErrorActionPreference = "Stop"
 
 $root = Split-Path -Parent $PSScriptRoot
 $requiredFiles = @(
-    "main.tf",
     "variables.tf",
-    "vpc.tf",
-    "versions.tf",
-    "outputs.tf",
-    "terraform.tfvars"
+    "ssh.tf",
+    "ec2.tf"
 )
 
 Write-Host "Checking required files..."
@@ -27,6 +24,13 @@ if (!(Test-Path -LiteralPath $terraform)) {
 
 Push-Location $root
 try {
+    if (!$env:TF_VAR_ssh_key) {
+        $publicKeyPath = Join-Path $root "keys\aws-challenge-ssh.pub"
+        if (Test-Path -LiteralPath $publicKeyPath) {
+            $env:TF_VAR_ssh_key = (Get-Content -Raw -LiteralPath $publicKeyPath).Trim()
+        }
+    }
+
     & $terraform fmt -check -recursive
     & $terraform validate
 }
