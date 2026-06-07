@@ -1,7 +1,7 @@
 .terraform/
 *.tfstate
 *.tfstate.*
-terraform.tfvars
 .terraform.lock.hcl
 crash.log
 crash.*.log
+Token.md
