@@ -5,7 +5,8 @@ $root = Split-Path -Parent $PSScriptRoot
 $requiredFiles = @(
     "variables.tf",
     "terraform.tfvars",
-    "application.tf"
+    "data.tf",
+    "compute.tf"
 )
 
 Write-Host "Checking required files..."
