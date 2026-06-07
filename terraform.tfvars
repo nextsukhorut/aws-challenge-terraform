@@ -1,19 +1,25 @@
 aws_region = "eu-west-1"
 
-project_id = "cmtr-t5hlnn4c"
+vpc_name = "cmtr-t5hlnn4c-01-vpc"
+vpc_cidr = "10.10.0.0/16"
 
-allowed_ip_range = [
-  "18.153.146.156/32",
-  "37.54.199.150/32"
+public_subnets = [
+  {
+    name              = "cmtr-t5hlnn4c-01-subnet-public-a"
+    cidr_block        = "10.10.1.0/24"
+    availability_zone = "eu-west-1a"
+  },
+  {
+    name              = "cmtr-t5hlnn4c-01-subnet-public-b"
+    cidr_block        = "10.10.3.0/24"
+    availability_zone = "eu-west-1b"
+  },
+  {
+    name              = "cmtr-t5hlnn4c-01-subnet-public-c"
+    cidr_block        = "10.10.5.0/24"
+    availability_zone = "eu-west-1c"
+  }
 ]
 
-vpc_id            = "vpc-018ea9295fe6e1e5a"
-public_subnet_id  = "subnet-0bd5eddc186049747"
-private_subnet_id = "subnet-08fc5cf0e675e1e70"
-
-public_instance_id  = "i-0d57e3dd183e250ee"
-private_instance_id = "i-0605f01ee4cb71556"
-
-ssh_security_group_name          = "cmtr-t5hlnn4c-ssh-sg"
-public_http_security_group_name  = "cmtr-t5hlnn4c-public-http-sg"
-private_http_security_group_name = "cmtr-t5hlnn4c-private-http-sg"
+internet_gateway_name = "cmtr-t5hlnn4c-01-igw"
+routing_table_name    = "cmtr-t5hlnn4c-01-rt"

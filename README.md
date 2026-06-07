@@ -4,7 +4,7 @@ Local helper repository for the AWS IaC with Terraform challenge.
 
 ## Current Task
 
-AWS IaC with Terraform: Configure Network Security.
+AWS IaC with Terraform: Create Network Infrastructure With Outputs.
 
 ## Current Repository Settings
 
@@ -16,16 +16,11 @@ AWS IaC with Terraform: Configure Network Security.
 
 Replace the placeholder values in `terraform.tfvars` after the platform generates real values:
 
-- `project_id`
-- `allowed_ip_range`
-- `vpc_id`
-- `public_subnet_id`
-- `private_subnet_id`
-- `public_instance_id`
-- `private_instance_id`
-- `ssh_security_group_name`
-- `public_http_security_group_name`
-- `private_http_security_group_name`
+- `vpc_name`
+- `vpc_cidr`
+- `public_subnets`
+- `internet_gateway_name`
+- `routing_table_name`
 
 ## Common Commands
 
@@ -46,9 +41,10 @@ Before Syndicate verification, make sure AWS resources are destroyed and the lat
 - AWS provider version is pinned exactly in `versions.tf`.
 - All variables are declared only in `variables.tf` with `type` and `description`.
 - Outputs are declared only in `outputs.tf` with descriptions.
-- Created security groups use the required tag: `Project=<project_id>`.
-- Private HTTP access uses `source_security_group_id`, not CIDR blocks.
-- Security groups are attached with `aws_network_interface_sg_attachment` so the platform security group is not removed.
+- The VPC and subnets are reusable through input variables.
+- Public subnets map public IPs on launch.
+- The public route table sends `0.0.0.0/0` traffic through the Internet Gateway.
+- Required network outputs are declared in `outputs.tf` with descriptions.
 - Local state files, plan files, and `Token.md` are excluded from Git.
 
 Not applied for this lab: remote backend, S3 state locking, and modules. The task explicitly requires the default local backend and is small enough to keep as a focused single-task configuration.

@@ -3,9 +3,10 @@ $ErrorActionPreference = "Stop"
 
 $root = Split-Path -Parent $PSScriptRoot
 $requiredFiles = @(
+    "main.tf",
     "variables.tf",
-    "network_security.tf",
-    "terraform.tfvars"
+    "vpc.tf",
+    "outputs.tf"
 )
 
 Write-Host "Checking required files..."
