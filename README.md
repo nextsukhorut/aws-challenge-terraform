@@ -4,7 +4,7 @@ Local helper repository for the AWS IaC with Terraform challenge.
 
 ## Current Task
 
-AWS IaC with Terraform: Use Remote State for EC2.
+AWS IaC with Terraform: Deploy Application Behind ALB.
 
 ## Current Repository Settings
 
@@ -14,11 +14,19 @@ AWS IaC with Terraform: Use Remote State for EC2.
 
 ## Required Task Parameters
 
-Replace the placeholder values in `terraform.tfvars` after the platform generates real values:
+Current generated task values are already defined in `terraform.tfvars`:
 
 - `project_id`
-- `state_bucket`
-- `state_key`
+- `vpc_name`
+- `public_subnet_cidr_blocks`
+- `ssh_inbound_name`
+- `http_inbound_name`
+- `lb_http_inbound_name`
+- `iam_instance_profile`
+- `key_name`
+- `aws_launch_template_name`
+- `aws_asg_name`
+- `load_balancer_name`
 
 ## Common Commands
 
@@ -39,10 +47,10 @@ Before Syndicate verification, make sure AWS resources are destroyed and the lat
 - AWS provider version is pinned exactly in `versions.tf`.
 - All variables are declared only in `variables.tf` with `type` and `description`.
 - Outputs are declared only in `outputs.tf` with descriptions.
-- Remote Landing Zone values are read with `data.terraform_remote_state.base_infra`.
-- Remote state S3 bucket, key, and region are provided through variables.
-- The EC2 instance uses subnet and security group IDs from remote state outputs.
-- No AWS VPC, subnet, or security group IDs are hardcoded in Terraform files.
+- `application.tf` contains the launch template, Auto Scaling Group, load balancer, target group, listener, and ASG attachment.
+- The launch template installs and starts Apache HTTP Server through user data.
+- The startup script uses IMDSv2 to render instance ID and private IP address.
+- Created resources use the required `Terraform=true` and `Project=<project_id>` tags.
 - Local state files, plan files, and `Token.md` are excluded from Git.
 
 Not applied for this lab: remote backend, S3 state locking, and modules. The task explicitly requires the default local backend and is small enough to keep as a focused single-task configuration.

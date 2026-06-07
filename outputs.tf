@@ -1,14 +1,19 @@
-output "instance_id" {
-  description = "ID of the EC2 instance created from remote state infrastructure."
-  value       = aws_instance.remote_state.id
+output "load_balancer_dns_name" {
+  description = "DNS name of the Application Load Balancer."
+  value       = aws_lb.app.dns_name
 }
 
-output "instance_public_ip" {
-  description = "Public IP address of the EC2 instance created from remote state infrastructure."
-  value       = aws_instance.remote_state.public_ip
+output "launch_template_id" {
+  description = "ID of the launch template used by the Auto Scaling Group."
+  value       = aws_launch_template.app.id
 }
 
-output "remote_state_vpc_id" {
-  description = "VPC ID read from the remote Landing Zone state."
-  value       = data.terraform_remote_state.base_infra.outputs.vpc_id
+output "autoscaling_group_name" {
+  description = "Name of the Auto Scaling Group."
+  value       = aws_autoscaling_group.app.name
+}
+
+output "target_group_arn" {
+  description = "ARN of the load balancer target group."
+  value       = aws_lb_target_group.app.arn
 }
