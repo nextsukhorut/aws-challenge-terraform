@@ -1,19 +1,14 @@
-output "iam_group_name" {
-  description = "Name of the IAM group created for this challenge."
-  value       = aws_iam_group.challenge.name
+output "ssh_security_group_id" {
+  description = "ID of the security group that allows SSH and ICMP access."
+  value       = aws_security_group.ssh.id
 }
 
-output "iam_policy_arn" {
-  description = "ARN of the custom IAM policy created for S3 write access."
-  value       = aws_iam_policy.s3_write.arn
+output "public_http_security_group_id" {
+  description = "ID of the security group that allows public HTTP and ICMP access."
+  value       = aws_security_group.public_http.id
 }
 
-output "iam_role_name" {
-  description = "Name of the IAM role trusted by EC2."
-  value       = aws_iam_role.ec2.name
-}
-
-output "iam_instance_profile_name" {
-  description = "Name of the IAM instance profile associated with the IAM role."
-  value       = aws_iam_instance_profile.ec2.name
+output "private_http_security_group_id" {
+  description = "ID of the security group that allows private HTTP and ICMP from the public HTTP security group."
+  value       = aws_security_group.private_http.id
 }

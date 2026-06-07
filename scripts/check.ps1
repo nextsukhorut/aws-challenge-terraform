@@ -4,8 +4,8 @@ $ErrorActionPreference = "Stop"
 $root = Split-Path -Parent $PSScriptRoot
 $requiredFiles = @(
     "variables.tf",
-    "iam.tf",
-    "policy.json"
+    "network_security.tf",
+    "terraform.tfvars"
 )
 
 Write-Host "Checking required files..."
@@ -25,7 +25,14 @@ if (!(Test-Path -LiteralPath $terraform)) {
 Push-Location $root
 try {
     & $terraform fmt -check -recursive
+    if ($LASTEXITCODE -ne 0) {
+        exit $LASTEXITCODE
+    }
+
     & $terraform validate
+    if ($LASTEXITCODE -ne 0) {
+        exit $LASTEXITCODE
+    }
 }
 finally {
     Pop-Location

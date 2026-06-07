@@ -8,27 +8,47 @@ variable "project_id" {
   type        = string
 }
 
-variable "bucket_name" {
-  description = "Name of the pre-created S3 bucket used in the IAM policy."
+variable "allowed_ip_range" {
+  description = "CIDR ranges allowed to access public infrastructure."
+  type        = list(string)
+}
+
+variable "vpc_id" {
+  description = "ID of the pre-created VPC where security groups are created."
   type        = string
 }
 
-variable "iam_group_name" {
-  description = "Name of the IAM group to create."
+variable "public_subnet_id" {
+  description = "ID of the pre-created public subnet."
   type        = string
 }
 
-variable "iam_policy_name" {
-  description = "Name of the custom IAM policy to create."
+variable "private_subnet_id" {
+  description = "ID of the pre-created private subnet."
   type        = string
 }
 
-variable "iam_role_name" {
-  description = "Name of the IAM role trusted by EC2."
+variable "public_instance_id" {
+  description = "ID of the pre-created public EC2 instance."
   type        = string
 }
 
-variable "iam_instance_profile_name" {
-  description = "Name of the IAM instance profile associated with the EC2 role."
+variable "private_instance_id" {
+  description = "ID of the pre-created private EC2 instance."
+  type        = string
+}
+
+variable "ssh_security_group_name" {
+  description = "Name of the security group that allows SSH and ICMP from approved IP ranges."
+  type        = string
+}
+
+variable "public_http_security_group_name" {
+  description = "Name of the security group that allows public HTTP and ICMP access."
+  type        = string
+}
+
+variable "private_http_security_group_name" {
+  description = "Name of the security group that allows private HTTP and ICMP from the public HTTP security group."
   type        = string
 }
