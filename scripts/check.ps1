@@ -4,7 +4,8 @@ $ErrorActionPreference = "Stop"
 $root = Split-Path -Parent $PSScriptRoot
 $requiredFiles = @(
     "variables.tf",
-    "storage.tf"
+    "iam.tf",
+    "policy.json"
 )
 
 Write-Host "Checking required files..."
