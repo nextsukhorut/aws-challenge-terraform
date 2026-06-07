@@ -16,7 +16,7 @@ if ([string]::IsNullOrWhiteSpace($token)) {
 Push-Location $root
 try {
     git status --short
-    git add -A -- .gitignore README.md main.tf outputs.tf terraform.tfvars variables.tf versions.tf ec2.tf ssh.tf vpc.tf scripts
+    git add -A -- .
     $changes = git diff --cached --name-only
     if ($changes) {
         git commit -m "Update Terraform challenge files"

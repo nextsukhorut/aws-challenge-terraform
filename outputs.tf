@@ -1,14 +1,9 @@
-output "instance_id" {
-  description = "ID of the EC2 instance created for SSH access."
-  value       = aws_instance.ssh.id
+output "bucket_name" {
+  description = "Name of the S3 bucket created for object storage."
+  value       = aws_s3_bucket.storage.bucket
 }
 
-output "instance_public_ip" {
-  description = "Public IP address of the EC2 instance created for SSH access."
-  value       = aws_instance.ssh.public_ip
-}
-
-output "key_pair_name" {
-  description = "Name of the AWS key pair registered for SSH access."
-  value       = aws_key_pair.ssh.key_name
+output "bucket_arn" {
+  description = "ARN of the S3 bucket created for object storage."
+  value       = aws_s3_bucket.storage.arn
 }
