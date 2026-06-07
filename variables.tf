@@ -3,31 +3,17 @@ variable "aws_region" {
   type        = string
 }
 
-variable "vpc_name" {
-  description = "Name tag for the VPC."
+variable "project_id" {
+  description = "Project identifier used for required resource tags."
   type        = string
 }
 
-variable "vpc_cidr" {
-  description = "CIDR block for the VPC."
+variable "state_bucket" {
+  description = "S3 bucket name that stores the remote Terraform state."
   type        = string
 }
 
-variable "public_subnets" {
-  description = "Public subnet definitions containing name, CIDR block, and Availability Zone."
-  type = list(object({
-    name              = string
-    cidr_block        = string
-    availability_zone = string
-  }))
-}
-
-variable "internet_gateway_name" {
-  description = "Name tag for the Internet Gateway."
-  type        = string
-}
-
-variable "routing_table_name" {
-  description = "Name tag for the public route table."
+variable "state_key" {
+  description = "S3 object key path to the remote Terraform state file."
   type        = string
 }

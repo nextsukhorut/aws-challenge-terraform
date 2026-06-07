@@ -1,34 +1,14 @@
-output "vpc_id" {
-  description = "ID of the created VPC."
-  value       = aws_vpc.main.id
+output "instance_id" {
+  description = "ID of the EC2 instance created from remote state infrastructure."
+  value       = aws_instance.remote_state.id
 }
 
-output "vpc_cidr" {
-  description = "CIDR block of the created VPC."
-  value       = aws_vpc.main.cidr_block
+output "instance_public_ip" {
+  description = "Public IP address of the EC2 instance created from remote state infrastructure."
+  value       = aws_instance.remote_state.public_ip
 }
 
-output "public_subnet_ids" {
-  description = "IDs of the created public subnets."
-  value       = aws_subnet.public[*].id
-}
-
-output "public_subnet_cidr_block" {
-  description = "CIDR blocks of the created public subnets."
-  value       = aws_subnet.public[*].cidr_block
-}
-
-output "public_subnet_availability_zone" {
-  description = "Availability Zones of the created public subnets."
-  value       = aws_subnet.public[*].availability_zone
-}
-
-output "internet_gateway_id" {
-  description = "ID of the Internet Gateway attached to the VPC."
-  value       = aws_internet_gateway.main.id
-}
-
-output "routing_table_id" {
-  description = "ID of the public route table."
-  value       = aws_route_table.public.id
+output "remote_state_vpc_id" {
+  description = "VPC ID read from the remote Landing Zone state."
+  value       = data.terraform_remote_state.base_infra.outputs.vpc_id
 }

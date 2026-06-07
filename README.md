@@ -4,7 +4,7 @@ Local helper repository for the AWS IaC with Terraform challenge.
 
 ## Current Task
 
-AWS IaC with Terraform: Create Network Infrastructure With Outputs.
+AWS IaC with Terraform: Use Remote State for EC2.
 
 ## Current Repository Settings
 
@@ -16,11 +16,9 @@ AWS IaC with Terraform: Create Network Infrastructure With Outputs.
 
 Replace the placeholder values in `terraform.tfvars` after the platform generates real values:
 
-- `vpc_name`
-- `vpc_cidr`
-- `public_subnets`
-- `internet_gateway_name`
-- `routing_table_name`
+- `project_id`
+- `state_bucket`
+- `state_key`
 
 ## Common Commands
 
@@ -41,10 +39,10 @@ Before Syndicate verification, make sure AWS resources are destroyed and the lat
 - AWS provider version is pinned exactly in `versions.tf`.
 - All variables are declared only in `variables.tf` with `type` and `description`.
 - Outputs are declared only in `outputs.tf` with descriptions.
-- The VPC and subnets are reusable through input variables.
-- Public subnets map public IPs on launch.
-- The public route table sends `0.0.0.0/0` traffic through the Internet Gateway.
-- Required network outputs are declared in `outputs.tf` with descriptions.
+- Remote Landing Zone values are read with `data.terraform_remote_state.base_infra`.
+- Remote state S3 bucket, key, and region are provided through variables.
+- The EC2 instance uses subnet and security group IDs from remote state outputs.
+- No AWS VPC, subnet, or security group IDs are hardcoded in Terraform files.
 - Local state files, plan files, and `Token.md` are excluded from Git.
 
 Not applied for this lab: remote backend, S3 state locking, and modules. The task explicitly requires the default local backend and is small enough to keep as a focused single-task configuration.
