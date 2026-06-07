@@ -2,20 +2,27 @@ Set-StrictMode -Version Latest
 $ErrorActionPreference = "Stop"
 
 $root = Split-Path -Parent $PSScriptRoot
+$terraformDirs = @(
+    "tf_code_1",
+    "tf_code_2"
+)
+
 $requiredFiles = @(
+    "versions.tf",
+    "main.tf",
     "variables.tf",
-    "terraform.tfvars",
-    "data.tf",
-    "compute.tf"
+    "terraform.tfvars"
 )
 
 Write-Host "Checking required files..."
-foreach ($file in $requiredFiles) {
-    $path = Join-Path $root $file
-    if (!(Test-Path -LiteralPath $path)) {
-        throw "Missing required file: $file"
+foreach ($dir in $terraformDirs) {
+    foreach ($file in $requiredFiles) {
+        $path = Join-Path (Join-Path $root $dir) $file
+        if (!(Test-Path -LiteralPath $path)) {
+            throw "Missing required file: $dir/$file"
+        }
+        Write-Host "OK $dir/$file"
     }
-    Write-Host "OK $file"
 }
 
 $terraform = Join-Path (Split-Path -Parent $root) ".tools\terraform-1.5.7\terraform.exe"
@@ -30,9 +37,17 @@ try {
         exit $LASTEXITCODE
     }
 
-    & $terraform validate
-    if ($LASTEXITCODE -ne 0) {
-        exit $LASTEXITCODE
+    foreach ($dir in $terraformDirs) {
+        Push-Location (Join-Path $root $dir)
+        try {
+            & $terraform validate
+            if ($LASTEXITCODE -ne 0) {
+                exit $LASTEXITCODE
+            }
+        }
+        finally {
+            Pop-Location
+        }
     }
 }
 finally {

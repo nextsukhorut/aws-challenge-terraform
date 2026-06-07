@@ -4,7 +4,7 @@ Local helper repository for the AWS IaC with Terraform challenge.
 
 ## Current Task
 
-AWS IaC with Terraform: Discover Existing Infrastructure with Data Sources.
+AWS IaC with Terraform: Move a Resource Between Terraform State Files.
 
 ## Current Repository Settings
 
@@ -12,15 +12,15 @@ AWS IaC with Terraform: Discover Existing Infrastructure with Data Sources.
 - Branch: `main`
 - Repository folder for Syndicate: `.`
 
-## Required Task Parameters
+## Current Task Parameters
 
-Replace the placeholder values in `terraform.tfvars` after the platform generates real values:
-
-- `project_id`
-- `vpc_name`
-- `public_subnet_name`
-- `security_group_name`
-- `ec2_instance_name`
+- State bucket: `cmtr-t5hlnn4c-backend-bucket-1780864102`
+- Source directory: `tf_code_1`
+- Destination directory: `tf_code_2`
+- Source state key: `tf_code_1.tfstate`
+- Destination state key: `tf_code_2.tfstate`
+- IAM policy resource: `aws_iam_policy.custom_policy`
+- IAM policy name: `resource-move-demo-policy`
 
 ## Common Commands
 
@@ -28,23 +28,18 @@ Use the scripts from PowerShell in this folder:
 
 ```powershell
 .\scripts\check.ps1
-.\scripts\tf.ps1 plan
-.\scripts\tf.ps1 apply
-.\scripts\tf.ps1 destroy
 .\scripts\push.ps1
 ```
 
-Before Syndicate verification, make sure AWS resources are destroyed and the latest Terraform code is pushed.
+Before Syndicate verification, make sure the IAM policy state is moved to `tf_code_2.tfstate` and the latest Terraform code is pushed.
 
 ## Applied Terraform Practices
 
-- AWS provider version is pinned exactly in `versions.tf`.
+- AWS provider version is pinned exactly in both Terraform directories.
 - All variables are declared only in `variables.tf` with `type` and `description`.
-- Outputs are declared only in `outputs.tf` with descriptions.
-- `data.tf` discovers the existing VPC, public subnet, security group, and latest Amazon Linux 2023 AMI.
-- `compute.tf` creates one EC2 instance using only data source outputs for AMI, subnet, and security group values.
-- No AWS VPC, subnet, security group, or AMI IDs are hardcoded in Terraform files.
-- The EC2 instance uses the required `Terraform=true` and `Project=<project_id>` tags.
+- `tf_code_1` is the source configuration after the IAM policy resource was removed.
+- `tf_code_2` is the destination configuration and manages `aws_iam_policy.custom_policy`.
+- The IAM policy configuration matches the pre-created AWS resource and should produce no infrastructure changes after the state move.
 - Local state files, plan files, and `Token.md` are excluded from Git.
 
-Not applied for this lab: remote backend, S3 state locking, and modules. The task explicitly requires the default local backend and is small enough to keep as a focused single-task configuration.
+This lab intentionally uses the provided S3 backend state files because the task is specifically about moving resource ownership between two Terraform state files.
