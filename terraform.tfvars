@@ -17,3 +17,9 @@ availability_zone3 = "eu-west-1c"
 
 internet_gateway_name = "cmtr-t5hlnn4c-01-igw"
 routing_table_name    = "cmtr-t5hlnn4c-01-rt"
+
+common_tags = {
+  ManagedBy = "Terraform"
+  Project   = "AWS Challenge"
+  Task      = "Creating Network Resources"
+}

@@ -67,3 +67,8 @@ variable "routing_table_name" {
   description = "Name tag for the public route table."
   type        = string
 }
+
+variable "common_tags" {
+  description = "Common tags applied to all taggable AWS resources."
+  type        = map(string)
+}

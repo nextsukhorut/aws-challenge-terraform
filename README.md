@@ -21,3 +21,13 @@ Use the scripts from PowerShell in this folder:
 ```
 
 Before Syndicate verification, make sure AWS resources are destroyed and the latest Terraform code is pushed.
+
+## Applied Terraform Practices
+
+- AWS provider version is pinned exactly in `versions.tf`.
+- All variables are declared only in `variables.tf` with `type` and `description`.
+- Outputs are declared only in `outputs.tf` with descriptions.
+- Taggable AWS resources use `common_tags` plus their required `Name` tag.
+- Local state files, plan files, and `Token.md` are excluded from Git.
+
+Not applied for this lab: remote backend, S3 state locking, and modules. The task explicitly requires the default local backend and is small enough to keep as a focused single-task configuration.

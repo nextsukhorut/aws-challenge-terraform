@@ -23,9 +23,9 @@ resource "aws_vpc" "main" {
   enable_dns_hostnames = true
   enable_dns_support   = true
 
-  tags = {
+  tags = merge(var.common_tags, {
     Name = var.vpc_name
-  }
+  })
 }
 
 resource "aws_subnet" "public" {
@@ -36,17 +36,17 @@ resource "aws_subnet" "public" {
   availability_zone       = each.value.availability_zone
   map_public_ip_on_launch = true
 
-  tags = {
+  tags = merge(var.common_tags, {
     Name = each.value.name
-  }
+  })
 }
 
 resource "aws_internet_gateway" "main" {
   vpc_id = aws_vpc.main.id
 
-  tags = {
+  tags = merge(var.common_tags, {
     Name = var.internet_gateway_name
-  }
+  })
 }
 
 resource "aws_route_table" "public" {
@@ -57,9 +57,9 @@ resource "aws_route_table" "public" {
     gateway_id = aws_internet_gateway.main.id
   }
 
-  tags = {
+  tags = merge(var.common_tags, {
     Name = var.routing_table_name
-  }
+  })
 }
 
 resource "aws_route_table_association" "public" {
