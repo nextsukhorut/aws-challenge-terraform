@@ -3,29 +3,77 @@ variable "aws_region" {
   type        = string
 }
 
-variable "policy_name" {
-  description = "Name of the existing IAM policy to import into Terraform state."
+variable "project_id" {
+  description = "Project identifier used for required resource tags."
   type        = string
 }
 
-variable "policy_path" {
-  description = "Path of the existing IAM policy to import into Terraform state."
+variable "vpc_name" {
+  description = "Name tag of the pre-created VPC."
   type        = string
 }
 
-variable "policy_description" {
-  description = "Description of the existing IAM policy to import into Terraform state."
+variable "public_subnet_names" {
+  description = "Name tags of the pre-created public subnets."
+  type        = list(string)
+}
+
+variable "ssh_security_group_name" {
+  description = "Name of the pre-created security group for SSH access."
   type        = string
 }
 
-variable "policy_document" {
-  description = "IAM policy document for the existing policy."
-  type = object({
-    Version = string
-    Statement = list(object({
-      Effect   = string
-      Action   = list(string)
-      Resource = string
-    }))
-  })
+variable "http_security_group_name" {
+  description = "Name of the pre-created security group for HTTP access to EC2 instances."
+  type        = string
+}
+
+variable "lb_security_group_name" {
+  description = "Name of the pre-created security group for HTTP access to the load balancer."
+  type        = string
+}
+
+variable "load_balancer_name" {
+  description = "Name of the Application Load Balancer."
+  type        = string
+}
+
+variable "blue_target_group_name" {
+  description = "Name of the Blue target group."
+  type        = string
+}
+
+variable "green_target_group_name" {
+  description = "Name of the Green target group."
+  type        = string
+}
+
+variable "blue_launch_template_name" {
+  description = "Name of the Blue launch template."
+  type        = string
+}
+
+variable "green_launch_template_name" {
+  description = "Name of the Green launch template."
+  type        = string
+}
+
+variable "blue_asg_name" {
+  description = "Name of the Blue Auto Scaling Group."
+  type        = string
+}
+
+variable "green_asg_name" {
+  description = "Name of the Green Auto Scaling Group."
+  type        = string
+}
+
+variable "blue_weight" {
+  description = "Traffic weight for the Blue target group."
+  type        = number
+}
+
+variable "green_weight" {
+  description = "Traffic weight for the Green target group."
+  type        = number
 }

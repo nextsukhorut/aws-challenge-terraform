@@ -1,19 +1,28 @@
 aws_region = "eu-west-1"
 
-policy_name        = "cmtr-t5hlnn4c-iam-policy"
-policy_path        = "/"
-policy_description = "Custom role with limited permissions"
+project_id = "cmtr-t5hlnn4c"
 
-policy_document = {
-  Version = "2012-10-17"
-  Statement = [
-    {
-      Effect = "Allow"
-      Action = [
-        "ec2:*",
-        "s3:*"
-      ]
-      Resource = "*"
-    }
-  ]
-}
+vpc_name = "cmtr-t5hlnn4c-vpc"
+
+public_subnet_names = [
+  "cmtr-t5hlnn4c-public-subnet1",
+  "cmtr-t5hlnn4c-public-subnet2"
+]
+
+ssh_security_group_name  = "cmtr-t5hlnn4c-sg-ssh"
+http_security_group_name = "cmtr-t5hlnn4c-sg-http"
+lb_security_group_name   = "cmtr-t5hlnn4c-sg-lb"
+
+load_balancer_name = "cmtr-t5hlnn4c-lb"
+
+blue_target_group_name  = "cmtr-t5hlnn4c-blue-tg"
+green_target_group_name = "cmtr-t5hlnn4c-green-tg"
+
+blue_launch_template_name  = "cmtr-t5hlnn4c-blue-template"
+green_launch_template_name = "cmtr-t5hlnn4c-green-template"
+
+blue_asg_name  = "cmtr-t5hlnn4c-blue-asg"
+green_asg_name = "cmtr-t5hlnn4c-green-asg"
+
+blue_weight  = 100
+green_weight = 0

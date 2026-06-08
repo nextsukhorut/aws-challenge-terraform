@@ -4,7 +4,7 @@ Local helper repository for the AWS IaC with Terraform challenge.
 
 ## Current Task
 
-AWS IaC with Terraform: Import an Existing IAM Policy.
+AWS IaC with Terraform: Blue-Green Deployment with Weighted ALB Routing.
 
 ## Current Repository Settings
 
@@ -12,22 +12,33 @@ AWS IaC with Terraform: Import an Existing IAM Policy.
 - Branch: `main`
 - Repository folder for Syndicate: `.`
 
-## Current Task Parameters
+## Required Task Parameters
 
-- State bucket: `cmtr-t5hlnn4c-backend-bucket-1780898237`
-- State key: `tf_code.tfstate`
-- AWS region: `eu-west-1`
-- IAM policy name: `cmtr-t5hlnn4c-iam-policy`
-- Terraform resource: `aws_iam_policy.custom_policy`
+Replace the placeholder values in `terraform.tfvars` after the platform generates real values:
+
+- `project_id`
+- `vpc_name`
+- `public_subnet_names`
+- `ssh_security_group_name`
+- `http_security_group_name`
+- `lb_security_group_name`
+- `load_balancer_name`
+- `blue_target_group_name`
+- `green_target_group_name`
+- `blue_launch_template_name`
+- `green_launch_template_name`
+- `blue_asg_name`
+- `green_asg_name`
 
 ## Commands
 
 Run from the repository root:
 
 ```powershell
-terraform init -backend-config='bucket=cmtr-t5hlnn4c-backend-bucket-1780898237' -backend-config='key=tf_code.tfstate' -backend-config='region=eu-west-1'
-terraform import aws_iam_policy.custom_policy <policy-arn>
-terraform plan
+terraform init
+terraform fmt
+terraform validate
+terraform plan -var "blue_weight=100" -var "green_weight=0"
 ```
 
-The final `terraform plan` must show no unexpected infrastructure changes.
+Before Syndicate verification, destroy any resources created during manual testing and push the final code.
