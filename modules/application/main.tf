@@ -10,6 +10,10 @@ locals {
 
     dnf update -y
     dnf install -y httpd curl
+    cat > /etc/httpd/conf.d/disable-keepalive.conf <<CONF
+    KeepAlive Off
+    MaxKeepAliveRequests 1
+    CONF
     systemctl enable httpd
     systemctl start httpd
 
@@ -73,10 +77,12 @@ resource "aws_lb" "this" {
 }
 
 resource "aws_lb_target_group" "this" {
-  name     = var.target_group_name
-  port     = 80
-  protocol = "HTTP"
-  vpc_id   = var.vpc_id
+  name                              = var.target_group_name
+  port                              = 80
+  protocol                          = "HTTP"
+  vpc_id                            = var.vpc_id
+  load_balancing_algorithm_type     = "round_robin"
+  load_balancing_cross_zone_enabled = "true"
 
   health_check {
     enabled             = true
