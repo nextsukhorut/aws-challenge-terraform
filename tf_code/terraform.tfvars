@@ -1,6 +1,6 @@
 aws_region = "eu-west-1"
 
-policy_name        = "resource-move-demo-policy"
+policy_name        = "cmtr-t5hlnn4c-iam-policy"
 policy_path        = "/"
 policy_description = "Custom role with limited permissions"
 

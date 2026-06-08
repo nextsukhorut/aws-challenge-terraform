@@ -1,7 +1,8 @@
 Set-StrictMode -Version Latest
 $ErrorActionPreference = "Stop"
 
-$root = Split-Path -Parent $PSScriptRoot
+$repoRoot = Split-Path -Parent $PSScriptRoot
+$root = Join-Path $repoRoot "tf_code"
 $requiredFiles = @(
     "versions.tf",
     "main.tf",
@@ -19,7 +20,7 @@ foreach ($file in $requiredFiles) {
     Write-Host "OK $file"
 }
 
-$terraform = Join-Path (Split-Path -Parent $root) ".tools\terraform-1.5.7\terraform.exe"
+$terraform = Join-Path (Split-Path -Parent $repoRoot) ".tools\terraform-1.5.7\terraform.exe"
 if (!(Test-Path -LiteralPath $terraform)) {
     throw "Terraform executable not found: $terraform"
 }

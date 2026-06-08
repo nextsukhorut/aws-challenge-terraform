@@ -4,22 +4,22 @@ variable "aws_region" {
 }
 
 variable "policy_name" {
-  description = "Name of the existing IAM policy managed by this Terraform configuration."
+  description = "Name of the existing IAM policy to import into Terraform state."
   type        = string
 }
 
 variable "policy_path" {
-  description = "Path of the existing IAM policy managed by this Terraform configuration."
+  description = "Path of the existing IAM policy to import into Terraform state."
   type        = string
 }
 
 variable "policy_description" {
-  description = "Description of the existing IAM policy managed by this Terraform configuration."
+  description = "Description of the existing IAM policy to import into Terraform state."
   type        = string
 }
 
 variable "policy_document" {
-  description = "IAM policy document for the existing custom policy."
+  description = "IAM policy document for the existing policy."
   type = object({
     Version = string
     Statement = list(object({
