@@ -17,7 +17,8 @@ $requiredFiles = @(
     "modules\network_security\outputs.tf",
     "modules\application\main.tf",
     "modules\application\variables.tf",
-    "modules\application\outputs.tf"
+    "modules\application\outputs.tf",
+    "modules\application\user_data.sh"
 )
 
 Write-Host "Checking required files..."
