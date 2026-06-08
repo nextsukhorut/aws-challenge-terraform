@@ -4,7 +4,7 @@ Local helper repository for the AWS IaC with Terraform challenge.
 
 ## Current Task
 
-AWS IaC with Terraform: Move a Resource Between Terraform State Files.
+AWS IaC with Terraform: Migrate S3 Backend State.
 
 ## Current Repository Settings
 
@@ -14,13 +14,10 @@ AWS IaC with Terraform: Move a Resource Between Terraform State Files.
 
 ## Current Task Parameters
 
-- State bucket: `cmtr-t5hlnn4c-backend-bucket-1780864102`
-- Source directory: `tf_code_1`
-- Destination directory: `tf_code_2`
-- Source state key: `tf_code_1.tfstate`
-- Destination state key: `tf_code_2.tfstate`
+- Original state bucket: `cmtr-t5hlnn4c-backend-bucket-1780896786`
+- New state bucket: `cmtr-t5hlnn4c-backend-new-bucket-1780896786`
+- State key: `tf_code.tfstate`
 - IAM policy resource: `aws_iam_policy.custom_policy`
-- IAM policy name: `resource-move-demo-policy`
 
 ## Common Commands
 
@@ -28,18 +25,17 @@ Use the scripts from PowerShell in this folder:
 
 ```powershell
 .\scripts\check.ps1
+.\scripts\tf.ps1 plan
 .\scripts\push.ps1
 ```
 
-Before Syndicate verification, make sure the IAM policy state is moved to `tf_code_2.tfstate` and the latest Terraform code is pushed.
+The Terraform backend in `versions.tf` points to the new S3 bucket. The existing state must be migrated there with `terraform init -migrate-state`.
 
 ## Applied Terraform Practices
 
-- AWS provider version is pinned exactly in both Terraform directories.
+- AWS provider version is pinned exactly in `versions.tf`.
 - All variables are declared only in `variables.tf` with `type` and `description`.
-- `tf_code_1` is the source configuration after the IAM policy resource was removed.
-- `tf_code_2` is the destination configuration and manages `aws_iam_policy.custom_policy`.
-- The IAM policy configuration matches the pre-created AWS resource and should produce no infrastructure changes after the state move.
+- The IAM policy resource is defined in `resources.tf`.
+- The policy configuration matches the existing AWS resource and should produce no infrastructure changes after the state migration.
+- No outputs are defined for this lab, so `terraform plan` remains clean after migration.
 - Local state files, plan files, and `Token.md` are excluded from Git.
-
-This lab intentionally uses the provided S3 backend state files because the task is specifically about moving resource ownership between two Terraform state files.
