@@ -2,7 +2,7 @@ Set-StrictMode -Version Latest
 $ErrorActionPreference = "Stop"
 
 $repoRoot = Split-Path -Parent $PSScriptRoot
-$root = Join-Path $repoRoot "tf_code"
+$root = $repoRoot
 $requiredFiles = @(
     "versions.tf",
     "main.tf",
