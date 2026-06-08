@@ -1,8 +1,7 @@
 #!/bin/bash
 set -euxo pipefail
 
-dnf update -y
-dnf install -y httpd curl
+dnf install -y httpd
 
 cat > /etc/httpd/conf.d/app.conf <<'CONF'
 KeepAlive Off
