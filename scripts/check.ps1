@@ -6,13 +6,18 @@ $root = $repoRoot
 $requiredFiles = @(
     "versions.tf",
     "main.tf",
-    "data.tf",
-    "locals.tf",
-    "compute.tf",
-    "load_balancer.tf",
     "variables.tf",
     "terraform.tfvars",
-    "user_data.sh.tftpl"
+    "outputs.tf",
+    "modules\network\main.tf",
+    "modules\network\variables.tf",
+    "modules\network\outputs.tf",
+    "modules\network_security\main.tf",
+    "modules\network_security\variables.tf",
+    "modules\network_security\outputs.tf",
+    "modules\application\main.tf",
+    "modules\application\variables.tf",
+    "modules\application\outputs.tf"
 )
 
 Write-Host "Checking required files..."

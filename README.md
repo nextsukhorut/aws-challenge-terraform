@@ -4,7 +4,7 @@ Local helper repository for the AWS IaC with Terraform challenge.
 
 ## Current Task
 
-AWS IaC with Terraform: Blue-Green Deployment with Weighted ALB Routing.
+AWS IaC with Terraform: Modular application deployment with network, network security, and application modules.
 
 ## Current Repository Settings
 
@@ -18,17 +18,21 @@ Replace the placeholder values in `terraform.tfvars` after the platform generate
 
 - `project_id`
 - `vpc_name`
-- `public_subnet_names`
+- `vpc_cidr`
+- `subnet_names`
+- `subnet_cidrs`
+- `availability_zones`
+- `internet_gateway_name`
+- `route_table_name`
+- `allowed_ip_range`
 - `ssh_security_group_name`
-- `http_security_group_name`
-- `lb_security_group_name`
+- `public_http_security_group_name`
+- `private_http_security_group_name`
+- `aws_launch_template_name`
+- `aws_asg_name`
 - `load_balancer_name`
-- `blue_target_group_name`
-- `green_target_group_name`
-- `blue_launch_template_name`
-- `green_launch_template_name`
-- `blue_asg_name`
-- `green_asg_name`
+- `target_group_name`
+- `ami_id`
 
 ## Commands
 
@@ -36,9 +40,9 @@ Run from the repository root:
 
 ```powershell
 terraform init
-terraform fmt
+terraform fmt -recursive
 terraform validate
-terraform plan -var "blue_weight=100" -var "green_weight=0"
+terraform plan
 ```
 
 Before Syndicate verification, destroy any resources created during manual testing and push the final code.
