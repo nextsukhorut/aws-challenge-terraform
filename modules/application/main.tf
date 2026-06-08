@@ -15,38 +15,20 @@ locals {
     MaxKeepAliveRequests 1
     CONF
 
-    cat > /etc/httpd/conf.d/app-cgi.conf <<CONF
-    <Directory "/var/www/html">
-        Options +ExecCGI
-        AddHandler cgi-script .cgi
-        DirectoryIndex index.cgi
-        Require all granted
-    </Directory>
-    CONF
-
-    cat > /var/www/html/index.cgi <<'CGI'
-    #!/bin/bash
-    echo "Content-Type: text/html"
-    echo "Connection: close"
-    echo ""
+    systemctl enable httpd
+    systemctl start httpd
 
     COMPUTE_MACHINE_UUID=$(cat /sys/devices/virtual/dmi/id/product_uuid | tr '[:upper:]' '[:lower:]')
-    TOKEN=$(curl -s -X PUT "http://169.254.169.254/latest/api/token" -H "X-aws-ec2-metadata-token-ttl-seconds: 21600")
-    COMPUTE_INSTANCE_ID=$(curl -s -H "X-aws-ec2-metadata-token: $${TOKEN}" http://169.254.169.254/latest/meta-data/instance-id)
-    RESPONSE_UUID=$(cat /proc/sys/kernel/random/uuid)
+    TOKEN=$(curl -X PUT "http://169.254.169.254/latest/api/token" -H "X-aws-ec2-metadata-token-ttl-seconds: 21600")
+    COMPUTE_INSTANCE_ID=$(curl -H "X-aws-ec2-metadata-token: $${TOKEN}" http://169.254.169.254/latest/meta-data/instance-id)
 
-    cat <<HTML
+    cat > /var/www/html/index.html <<HTML
     <html>
       <body>
-        <p>This message was generated on instance $${COMPUTE_INSTANCE_ID} with the following UUID $${RESPONSE_UUID}</p>
+        <p>This message was generated on instance $${COMPUTE_INSTANCE_ID} with the following UUID $${COMPUTE_MACHINE_UUID}</p>
       </body>
     </html>
     HTML
-    CGI
-
-    chmod 755 /var/www/html/index.cgi
-    systemctl enable httpd
-    systemctl start httpd
   USERDATA
 }
 
@@ -137,8 +119,11 @@ resource "aws_autoscaling_group" "this" {
   min_size                  = var.min_size
   max_size                  = var.max_size
   vpc_zone_identifier       = var.subnet_ids
+  target_group_arns         = [aws_lb_target_group.this.arn]
   health_check_type         = "ELB"
-  health_check_grace_period = 120
+  health_check_grace_period = 180
+  wait_for_elb_capacity     = var.desired_capacity
+  wait_for_capacity_timeout = "15m"
 
   launch_template {
     id      = aws_launch_template.this.id
